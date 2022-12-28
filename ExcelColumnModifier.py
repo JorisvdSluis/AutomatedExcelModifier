@@ -33,9 +33,9 @@ from re import sub
 # else: 
 #     print(value)
 
-with open('persons.csv', 'w', encoding='utf-8-sig') as csvfile2:
+with open(r'C:\Users\jjori\Documents\CeVeDe\prijslijst 07-2022\strada hybrid jaga kleur met extra types (wel javascript).csv', 'w', encoding='utf-8-sig') as csvfile2:
         dict_writer = csv.writer(csvfile2, lineterminator = '\n')
-        with open(r'D:\Users\jjori\Documents\CeVeDe\csv2\test2.csv', 'r', encoding='utf-8-sig') as csv_file:
+        with open(r'C:\Users\jjori\Documents\CeVeDe\prijslijst 02-2022\strada hybrid jaga kleur met extra types (wel javascript).csv', 'r', encoding='utf-8-sig') as csv_file:
             priceString = 'Variant Price'
             comparePriceString = 'Variant Compare At Price'
             reader = csv.reader(csv_file)
@@ -51,6 +51,9 @@ with open('persons.csv', 'w', encoding='utf-8-sig') as csvfile2:
             for row in reader:
                 print(len(row))
                 
-                row[priceIndex] = round(float(sub(r'[^\d.]', '',row[priceIndex])) * 1.04, 2)
-                row[compareIndex] = round(float(sub(r'[^\d.]', '',row[compareIndex])) * 1.04, 2)
+                row[priceIndex] = round(float(sub(r'[^\d.]', '',row[priceIndex])) * 1.045, 2)
+                row[compareIndex] = round(float(sub(r'[^\d.]', '',row[compareIndex])) * 1.045, 2)
                 dict_writer.writerow(row)
+
+
+# files = ["mini wand jaga kleur.csv", "mini wand jaga kleur.csv", "mini wand standaard kleur.csv", "strada hybrid jaga kleur.csv", "Strada standaard s.csv", "Strada standaard s.csv", "Strada standaard s.csv", "strada twin jaga kleur.csv","strada twin s.csv", "Tempo totaal.csv","vertiga totaal.csv"]
