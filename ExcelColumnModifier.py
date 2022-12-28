@@ -56,12 +56,50 @@ from re import sub
 #                dict_writer.writerow(row)
 
 
-files = ["mini wand jaga kleur.csv", "mini wand jaga kleur.csv", "mini wand standaard kleur.csv", "strada hybrid jaga kleur.csv", "Strada standaard s.csv", "Strada standaard s.csv", "Strada standaard s.csv", "strada twin jaga kleur.csv","strada twin s.csv", "Tempo totaal.csv","vertiga totaal.csv"]
+files = ["mini wand jaga kleur.csv"]#, "mini wand jaga kleur.csv", "mini wand standaard kleur.csv", "strada hybrid jaga kleur.csv", "Strada standaard s.csv", "Strada standaard s.csv", "Strada standaard s.csv", "strada twin jaga kleur.csv","strada twin s.csv", "Tempo totaal.csv","vertiga totaal.csv"]
 
-with open(r'C:\Users\jjori\Documents\CeVeDe\prijslijst 01-2023\jaga.csv', 'w', encoding='utf-8-sig') as origin:
-      dict_writer = csv.writer(origin, lineterminator = '\n')
-      for fileName in files:
-        with open(r'C:\Users\jjori\Documents\CeVeDe\prijslijst 01-2023\{}'.format(fileName), 'r', encoding='utf-8-sig') as csv_file:
-            reader = csv.reader(csv_file)
-            for row in reader:
-                print(fileName)
+with open(r'C:\Users\jjori\Documents\CeVeDe\prijslijst 01-2023\jaga.csv', 'r', encoding='utf-8-sig') as origin:
+      originDict_writer = csv.writer(origin, lineterminator = '\n')
+      orginReader = csv.reader(origin)
+
+      changed = 0
+      for originRow in orginReader:
+        serialNumber = originRow[0]
+        for fileName in files:
+            with open(r'C:\Users\jjori\Documents\CeVeDe\prijslijst 01-2023\{}'.format(fileName), 'r', encoding='utf-8-sig') as csv_file:
+                
+                priceString = 'Variant Price'
+                comparePriceString = 'Variant Compare At Price'
+                reader = csv.reader(csv_file)
+                headers =  next(reader)
+                priceIndex = headers.index(priceString)
+                compareIndex = headers.index(comparePriceString)
+                SKUIndex = headers.index('Variant SKU')
+                count = 0
+                with open(r'C:\Users\jjori\Documents\CeVeDe\prijslijst 01-2023\{}2'.format(fileName), 'w+', encoding='utf-8-sig') as csv_file_new:
+                    dict_writer = csv.writer(csv_file_new, lineterminator = '\n')
+                    try:               
+                        for row in reader:
+                            #print(row)
+                            count = count + 1
+                            try:
+                                if(serialNumber in row[SKUIndex] ):   
+                                        row[priceIndex] = originRow[2]
+                                        dict_writer.writerow(row)
+                                #row[priceIndex] = round(float(sub(r'[^\d.]', '',originRow[2]*1.21*0.70)) , 2)
+                                #row[compareIndex] = round(float(sub(r'[^\d.]', '',originRow[2]*1.21)), 2)
+                            except:
+                                print('exception')
+                            #always write to prevent truncate
+                        
+                            # changed = changed + 1
+                            # print(count)
+                            # print(changed)
+                    except:
+                        print("FAIL")  
+
+                       # print(originRow[0])
+                       # print(row[SKUIndex])
+#originDict_writer.writerow(originRow)           
+               # count = 0
+                #changed = 0
