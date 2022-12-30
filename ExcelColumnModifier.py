@@ -58,7 +58,7 @@ from re import sub
 
 files = ["mini wand jaga kleur.csv"]#, "mini wand jaga kleur.csv", "mini wand standaard kleur.csv", "strada hybrid jaga kleur.csv", "Strada standaard s.csv", "Strada standaard s.csv", "Strada standaard s.csv", "strada twin jaga kleur.csv","strada twin s.csv", "Tempo totaal.csv","vertiga totaal.csv"]
 
-with open(r'C:\Users\jjori\Documents\CeVeDe\prijslijst 01-2023\test.csv', 'r', encoding='utf-8-sig') as origin:
+with open(r'C:\Users\jjori\Documents\CeVeDe\prijslijst 01-2023\jagaformat.csv', 'r', encoding='utf-8-sig') as origin:
       originDict_writer = csv.writer(origin, lineterminator = '\n')
       orginReader = csv.reader(origin)
 
@@ -77,9 +77,9 @@ with open(r'C:\Users\jjori\Documents\CeVeDe\prijslijst 01-2023\test.csv', 'r', e
                 SKUIndex = headers.index('Variant SKU')
                 count = 0
                 
-                with open(r'C:\Users\jjori\Documents\CeVeDe\prijslijst 01-2023\TEST{}'.format(fileName), 'a', encoding='utf-8-sig') as csv_file_new:
+                with open(r'C:\Users\jjori\Documents\CeVeDe\prijslijst 01-2023\new\{}'.format(fileName), 'a', encoding='utf-8-sig') as csv_file_new:
                     dict_writer = csv.writer(csv_file_new, lineterminator = '\n')
-                    
+                    print(fileName)
                     try:               
                         for row in reader:
                             
@@ -89,10 +89,12 @@ with open(r'C:\Users\jjori\Documents\CeVeDe\prijslijst 01-2023\test.csv', 'r', e
                                 if(serialNumber in row[SKUIndex] ):  
                                         changed = changed + 1
                                         print(changed) 
-                                        row[priceIndex] = originRow[2]
+
+                                        row[priceIndex] = round(float(sub(r'[^\d.]', '',originRow[1]*1.21*0.70)) , 2)
+                                        row[compareIndex] = round(float(sub(r'[^\d.]', '',originRow[1]*1.21)), 2)
                                         dict_writer.writerow(row)
-                                #row[priceIndex] = round(float(sub(r'[^\d.]', '',originRow[2]*1.21*0.70)) , 2)
-                                #row[compareIndex] = round(float(sub(r'[^\d.]', '',originRow[2]*1.21)), 2)
+                                #
+                                #
                             except:
                                 count = count + 1
                             #always write to prevent truncate
